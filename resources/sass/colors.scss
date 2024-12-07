@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Primary Colors
+$primary-100: #022964;
+$primary-90: #033D96;
+$primary-80: #0351C9;
+$primary-70: #0465FB;
+$primary-60: #3684FC;
+$primary-50: #69A3FC;
+$primary-40: #9BC2FD;
+$primary-30: #CDE0FE;
+$primary-20: #E6F0FF;
+$primary-10: #F2F7FF;
+
+// Secondary Colors
+$secondary-100: #0B331C;
+$secondary-90: #092A17;
+$secondary-80: #12542E;
+$secondary-70: #1B7E45;
+$secondary-60: #25A75C;
+$secondary-50: #2DD273;
+$secondary-40: #58DA8F;
+$secondary-30: #81E4AB;
+$secondary-20: #ABEDC7;
+$secondary-10: #D5F6E3;
+
+// Tertiary Colors
+$tertiary-100: #000000;
+$tertiary-90: #332000;
+$tertiary-80: #664000;
+$tertiary-70: #996000;
+$tertiary-60: #CC8000;
+$tertiary-50: #FFA001;
+$tertiary-40: #FFB333;
+$tertiary-30: #FFC666;
+$tertiary-20: #FFD999;
+$tertiary-10: #FFECCC;
+
+// Natural Colors
+$black: #09101D;
+$natural-1: #2C3A4B;
+$natural-2: #394452;
+$natural-3: #545D69;
+$natural-4: #6D7580;
+$natural-5: #858C94;
+$natural-6: #A5ABB3;
+$natural-7: #DADEE3;
+$natural-8: #EBEEF2;
+$natural-9: #F4F6F9;
+
+// Action Primary
+$action-primary-default: #9BC2FD;
+$action-primary-hover: #0453CC;
+$action-primary-active: #0449B2;
+$action-primary-disabled: #033D96;
+$action-primary-hover-10: #033D96;
+$action-primary-active-20: #CDD8EA;
+$action-primary-visited: #5E38BA;
+
+// Action Secondary
+$action-secondary-default: #33D275;
+$action-secondary-hover: #2ABC67;
+$action-secondary-active: #25A75C;
+$action-secondary-disabled: #A9E9C4;
+$action-secondary-hover-10: #D1EADB;
+$action-secondary-active-20: #C0E3CE;
+
+// Action Tertiary
+$action-tertiary-default: #FFB333;
+$action-tertiary-hover: #FFC666;
+$action-tertiary-active: #FDB948;
+$action-tertiary-disabled: #FFE5B9;
+$action-tertiary-hover-10: #FFE5B9;
+$action-tertiary-active-20: #FEDA9D;
+
+// Action Neutral
+$action-neutral-default: #9098A1;
+$action-neutral-hover: #858C94;
+$action-neutral-active: #798087;
+$action-neutral-disabled: #9098A1;
+$action-neutral-hover-10: #6D7580;
+$action-neutral-active-20: #6D7580;
+
+// States
+$state-success: #287D3C;
+$state-warning: #FD6F03;
+$state-error: #DA1414;
+$state-info: #F610BD;
+$success-bg: #EDF9F0;
+$warning-bg: #FFE6D4;
+$error-bg: #FEEFEF;
+$info-bg: #FFEDFB;
+
+// Generate classes for all variations
+@each $type, $colors in (
+  primary: (
+    100: $primary-100,
+    90: $primary-90,
+    80: $primary-80,
+    70: $primary-70,
+    60: $primary-60,
+    50: $primary-50,
+    40: $primary-40,
+    30: $primary-30,
+    20: $primary-20,
+    10: $primary-10
+  ),
+  secondary: (
+    100: $secondary-100,
+    90: $secondary-90,
+    80: $secondary-80,
+    70: $secondary-70,
+    60: $secondary-60,
+    50: $secondary-50,
+    40: $secondary-40,
+    30: $secondary-30,
+    20: $secondary-20,
+    10: $secondary-10
+  ),
+  tertiary: (
+    100: $tertiary-100,
+    90: $tertiary-90,
+    80: $tertiary-80,
+    70: $tertiary-70,
+    60: $tertiary-60,
+    50: $tertiary-50,
+    40: $tertiary-40,
+    30: $tertiary-30,
+    20: $tertiary-20,
+    10: $tertiary-10
+  ),
+  natural: (
+    0: $black,
+    1: $natural-1,
+    2: $natural-2,
+    3: $natural-3,
+    4: $natural-4,
+    5: $natural-5,
+    6: $natural-6,
+    7: $natural-7,
+    8: $natural-8,
+    9: $natural-9
+  )
+) {
+  @each $key, $color in $colors {
+    .bg-#{$type}-#{$key} {
+      background-color: $color;
+    }
+
+    .text-#{$type}-#{$key} {
+      color: $color;
+    }
+  }
+}
+
+// Generate utility classes for states
+@each $state, $color in (
+  success: $state-success,
+  warning: $state-warning,
+  error: $state-error,
+  info: $state-info,
+  success-bg: $success-bg,
+  warning-bg: $warning-bg,
+  error-bg: $error-bg,
+  info-bg: $info-bg
+) {
+  .bg-#{$state} {
+    background-color: $color;
+  }
+
+  .text-#{$state} {
+    color: $color;
+  }
+}
