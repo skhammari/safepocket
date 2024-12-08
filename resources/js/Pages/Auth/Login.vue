@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import {list} from "postcss";
 
 defineProps({
     canResetPassword: {
@@ -26,6 +27,14 @@ const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
     });
+};
+
+const getButtonClass = () => {
+    if (!form.email || !form.password) {
+        return 'bg-colors-natural-8 hover:bg-colors-natural-9 text-colors-natural-3 cursor-not-allowed';
+    }
+
+    return 'bg-colors-primary-60 hover:bg-colors-primary-80 text-colors-natural-8'
 };
 </script>
 
@@ -107,17 +116,18 @@ const submit = () => {
 
             <div>
                 <PrimaryButton
-                    class="w-full justify-center rounded-lg bg-natural-8 text-natural-5 py-3 font-semibold cursor-not-allowed"
-                    disabled
+                    class="w-full justify-center rounded-lg py-3 font-semibold"
+                    :disabled="form.processing || !form.email || !form.password"
+                    :class="getButtonClass()"
                 >
                     Next
                 </PrimaryButton>
             </div>
 
             <div class="my-6 flex items-center justify-between">
-                <span class="h-px w-1/5 bg-natural-2"></span>
+                <span class="h-px w-1/3 bg-natural-2"></span>
                 <span class="text-sm text-natural-2">Or With</span>
-                <span class="h-px w-1/5 bg-natural-2"></span>
+                <span class="h-px w-1/3 bg-natural-2"></span>
             </div>
 
             <div class="flex flex-col gap-4">
@@ -138,7 +148,7 @@ const submit = () => {
 
         <div class="mt-6 text-center mb-12">
             <span class="text-sm text-natural-1">
-                Don’t have an account? 
+                Don’t have an account?
             </span>
             <Link
                 :href="route('register')"
