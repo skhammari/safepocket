@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        if(
+            !User::where('email', $request->email)->exists()
+        ) {
+            return back()->withErrors([
+                'email' => 'Email is not registered.',
+            ]);
+        }
+
+        if(
+            $foundUser = User::where('email', $request->email)->first()
+        ) {
+            if (!\Hash::check($request->password, $foundUser->password)) {
+                return back()->withErrors([
+                    'password' => 'Password is incorrect. Please try again.',
+                ]);
+            }
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();

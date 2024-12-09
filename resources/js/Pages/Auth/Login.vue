@@ -54,14 +54,14 @@ const getButtonClass = () => {
                 <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full rounded-lg border-gray-300"
+                    class="mt-1 block w-full p-3 rounded-xl border-colors-natural-3"
                     v-model="form.email"
                     required
                     autofocus
                     autocomplete="username"
                     placeholder="Enter Your Email"
                 />
-                <InputError class="mt-2" :message="form.errors.email" />
+<!--                <InputError class="mt-2" :message="form.errors.email" />-->
             </div>
 
             <div class="mb-4">
@@ -70,7 +70,7 @@ const getButtonClass = () => {
                     <TextInput
                         id="password"
                         type="password"
-                        class="mt-1 block w-full rounded-lg border-gray-300"
+                        class="mt-1 block w-full p-3 rounded-xl border-colors-natural-3"
                         v-model="form.password"
                         required
                         autocomplete="current-password"
@@ -92,7 +92,13 @@ const getButtonClass = () => {
 
                     </button>
                 </div>
-                <InputError class="mt-2" :message="form.errors.password" />
+                <p v-if="form.errors.email" class="block w-full mt-2 text-sm text-colors-state-error" style="font-size: 17px; line-height: 25px">
+                    We couldn’t find any account with this email
+                    please try again or <a class="underline font-bold" :href="route('register')">Create a new account</a>
+                </p>
+                <p v-if="form.errors.password" class="block w-full mt-2 text-sm text-colors-state-error" style="font-size: 17px; line-height: 25px">
+                    {{ form.errors.password }}
+                </p>
             </div>
 
             <div class="flex items-center justify-between mb-6">
@@ -116,7 +122,7 @@ const getButtonClass = () => {
 
             <div>
                 <PrimaryButton
-                    class="w-full justify-center rounded-lg py-3 font-semibold"
+                    class="w-full mt-12 justify-center rounded-lg py-3 font-semibold"
                     :disabled="form.processing || !form.email || !form.password"
                     :class="getButtonClass()"
                 >
