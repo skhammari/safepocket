@@ -40,7 +40,12 @@ class UserResource extends Resource
                     ->required()
                     ->confirmed()
                     ->maxLength(255),
-                
+                Forms\Components\Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -54,6 +59,9 @@ class UserResource extends Resource
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Email Verified')
                     ->icon(fn ($state) => $state ? 'heroicon-o-check' : 'heroicon-o-x-mark'),
+                Tables\Columns\TextColumn::make('roles')
+                    ->badge()
+                    ->separator(', '),
             ])
             ->filters([
                 //
