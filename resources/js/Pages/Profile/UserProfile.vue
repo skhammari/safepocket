@@ -1,5 +1,8 @@
 <template>
-    <div class="profile-container">
+    <div v-if="showBiometricVerification">
+        <BiometricVerification @close="showBiometricVerification = false" />
+    </div>
+    <div v-else class="profile-container">
         <!-- Header -->
         <div class="header">
             <button @click="router.post('/logout', { preserveScroll: true })" class="back-button">‹</button>
@@ -31,10 +34,10 @@
 
         <!-- Main Settings -->
         <div class="settings-section bg-colors-natural-9 rounded-xl">
-            <div class="setting-item">
+            <div class="setting-item" @click="router.get(route('user.level'))">
                 <span>User Level</span>
                 <div class="setting-value with-arrow">
-                    <span>Stage 1</span>
+                    <span>Stage {{ profileData.stageOneStatus.phone && profileData.stageOneStatus.biometric && profileData.stageOneStatus.address ? '1' : 'Incomplete' }}</span>
                     <span class="arrow">›</span>
                 </div>
             </div>
@@ -78,7 +81,13 @@
 
             <div class="setting-item">
                 <span>Biometric verification</span>
-                <div class="check-icon success">✓</div>
+                <button 
+                    class="verify-button"
+                    @click="showBiometricVerification = true"
+                    :class="{ 'verified': profileData.stageOneStatus.biometric }"
+                >
+                    {{ profileData.stageOneStatus.biometric ? '✓' : 'Start verification' }}
+                </button>
             </div>
 
             <!-- Verification Status -->
@@ -127,9 +136,10 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
-
+import UserLevel from './Components/UserLevel.vue'
+import BiometricVerification from './Components/BiometricVerification.vue'
 
 const profileData = reactive({
     name: 'Saeed',
@@ -138,8 +148,22 @@ const profileData = reactive({
     ip: '87.28.23.112',
     phone: '01765432676',
     address: 'Estonia',
-    email: 'sar***@gmail.com'
+    email: 'sar***@gmail.com',
+    stageOneStatus: {
+        phone: true,
+        biometric: true,
+        address: true,
+        maxTransactions: 3
+    },
+    stageTwoStatus: {
+        phone: false,
+        biometric: false,
+        address: false,
+        maxTransactions: 3
+    }
 })
+
+const showBiometricVerification = ref(false)
 </script>
 
 <style scoped>

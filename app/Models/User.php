@@ -54,4 +54,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->email === 'skhammari@safepocket.eu';
     }
+
+    public function verification()
+    {
+        return $this->hasOne(UserVerification::class);
+    }
 }
